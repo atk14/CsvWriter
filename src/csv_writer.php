@@ -11,7 +11,7 @@ class CsvWriter {
 			"quote" => '"',
 			"escape_char" => "\\",
 
-			"format" => "csv",
+			"format" => "csv", // "csv", "xlsx"
 		);
 
 		$this->default_options = $options;
@@ -68,18 +68,22 @@ class CsvWriter {
 		}
 
 		if($format == "csv"){
+
 			$bytes_writen = 0;
 			foreach($rows as $row){
 				$bw = fputcsv($stream,$row,$options["delimiter"],$options["quote"],$options["escape_char"]);
 				$bytes_writen += $bw;
 			}
+
 		}elseif($format == "xlsx"){
+
 			$wExcel = new Ellumilel\ExcelWriter();
 			$wExcel->writeSheet($rows);
 			$src = $wExcel->writeToString();
 			fwrite($stream,$src,strlen($src));
 			$bytes_writen = strlen($src);
 		}else{
+
 			throw new Exception("CsvWriter: Invalid format: $format");
 		}
 
