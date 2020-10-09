@@ -28,12 +28,12 @@ class CsvWriter {
 
 	/**
 	 *
-	 *	$writer->exportCsv();
-	 *	$writer->exportCsv(["with_header" => true]);
+	 *	$writer->writeToString();
+	 *	$writer->writeToString(["with_header" => true]);
 	 */
-	function exportCsv($options = array()){
+	function writeToString($options = array()){
 		$stream = fopen("php://temp","r+");
-		$bytes_writen = $this->_exportCsv($stream,$options);
+		$bytes_writen = $this->_writeToString($stream,$options);
 		rewind($stream);
 		$out = fread($stream,$bytes_writen);
 
@@ -42,16 +42,16 @@ class CsvWriter {
 
 	/**
 	 *
-	 *	$writer->exportCsvToFile("/path/to/file.csv");
-	 *	$writer->exportCsvToFile("/path/to/file.csv",["with_header" => true]);
+	 *	$writer->writeToFile("/path/to/file.csv");
+	 *	$writer->writeToFile("/path/to/file.csv",["with_header" => true]);
 	 */
-	function exportCsvToFile($filename,$options = array()){
+	function writeToFile($filename,$options = array()){
 		$stream = fopen($filename,"w");
-		$bytes_writen = $this->_exportCsv($stream,$options);
+		$bytes_writen = $this->_writeToString($stream,$options);
 		fclose($stream);
 	}
 
-	protected function _exportCsv($stream,$options){
+	protected function _writeToString($stream,$options){
 		$options += $this->default_options;
 		$options += array(
 			"with_header" => false,

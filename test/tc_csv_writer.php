@@ -18,20 +18,20 @@ class TcCsvWriter extends TcBase {
 			"price" => 2099.99,
 		]);
 
-		$csv = $writer->exportCsv();
+		$csv = $writer->writeToString();
 		$this->assertEquals("CAN_G1X;4999\nCAN_G15;2099.99\n",$csv);
 
-		$csv = $writer->exportCsv(array("delimiter" => ","));
+		$csv = $writer->writeToString(array("delimiter" => ","));
 		$this->assertEquals("CAN_G1X,4999\nCAN_G15,2099.99\n",$csv);
 
-		$csv = $writer->exportCsv(array("with_header" => true));
+		$csv = $writer->writeToString(array("with_header" => true));
 		$this->assertEquals("product_no;price\nCAN_G1X;4999\nCAN_G15;2099.99\n",$csv);
 
-		$csv = $writer->exportCsv(array("with_header" => array("Product No.","Price")));
+		$csv = $writer->writeToString(array("with_header" => array("Product No.","Price")));
 		$this->assertEquals("\"Product No.\";Price\nCAN_G1X;4999\nCAN_G15;2099.99\n",$csv);
 
 		$filename = __DIR__ . "/temp/output.csv";
-		$writer->exportCsvToFile($filename,array("delimiter" => "|", "with_header" => array("Product No.","Price")));
+		$writer->writeToFile($filename,array("delimiter" => "|", "with_header" => array("Product No.","Price")));
 		$this->assertEquals("\"Product No.\"|Price\nCAN_G1X|4999\nCAN_G15|2099.99\n",file_get_contents($filename));
 	}
 }
