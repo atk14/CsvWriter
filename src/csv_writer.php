@@ -10,6 +10,8 @@ class CsvWriter {
 			"delimiter" => ";",
 			"quote" => '"',
 			"escape_char" => "\\",
+
+			"format" => "csv",
 		);
 
 		$this->default_options = $options;
@@ -33,7 +35,7 @@ class CsvWriter {
 	 */
 	function writeToString($options = array()){
 		$stream = fopen("php://temp","r+");
-		$bytes_writen = $this->_writeToString($stream,$options);
+		$bytes_writen = $this->_writeToStream($stream,$options);
 		rewind($stream);
 		$out = fread($stream,$bytes_writen);
 
@@ -47,25 +49,38 @@ class CsvWriter {
 	 */
 	function writeToFile($filename,$options = array()){
 		$stream = fopen($filename,"w");
-		$bytes_writen = $this->_writeToString($stream,$options);
+		$bytes_writen = $this->_writeToStream($stream,$options);
 		fclose($stream);
 	}
 
-	protected function _writeToString($stream,$options){
+	protected function _writeToStream($stream,$options){
 		$options += $this->default_options;
 		$options += array(
-			"with_header" => false,
+			"with_header" => false, // true, array("Firstname","Surname")
 		);
 
-		$bytes_writen = 0;
+		$format = $options["format"]; // "csv", "xlsx"
+
+		$rows = $this->rows;
 		if($options["with_header"] || $options["with_header"]===array()){
 			$header = is_array($options["with_header"]) ? $options["with_header"] : $this->header;
-			$bw = fputcsv($stream,$header,$options["delimiter"],$options["quote"],$options["escape_char"]);
-			$bytes_writen += $bw;
+			array_unshift($rows,$header);
 		}
-		foreach($this->rows as $row){
-			$bw = fputcsv($stream,$row,$options["delimiter"],$options["quote"],$options["escape_char"]);
-			$bytes_writen += $bw;
+
+		if($format == "csv"){
+			$bytes_writen = 0;
+			foreach($rows as $row){
+				$bw = fputcsv($stream,$row,$options["delimiter"],$options["quote"],$options["escape_char"]);
+				$bytes_writen += $bw;
+			}
+		}elseif($format == "xlsx"){
+			$wExcel = new Ellumilel\ExcelWriter();
+			$wExcel->writeSheet($rows);
+			$src = $wExcel->writeToString();
+			fwrite($stream,$src,strlen($src));
+			$bytes_writen = strlen($src);
+		}else{
+			throw new Exception("CsvWriter: Invalid format: $format");
 		}
 
 		return $bytes_writen;

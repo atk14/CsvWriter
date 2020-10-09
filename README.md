@@ -22,19 +22,25 @@ Basic usage
       "price" => 2099.99,
     ]);
 
-    echo $writer->exportCsv();
+    echo $writer->writeToString();
     //  CAN_G1X;4999
     //  CAN_G15;2099.99
 
-    echo $writer->exportCsv(["with_header" => true]);
+    echo $writer->writeToString(["with_header" => true]);
     //  product_no;price
     //  CAN_G1X;4999
     //  CAN_G15;2099.99
 
-    echo $writer->exportCsv(["with_header" => ["Product No.","Price"]]);
+    echo $writer->writeToString(["with_header" => ["Product No.","Price"]]);
     //  "Product No.";Price
     //  CAN_G1X;4999
     //  CAN_G15;2099.99
+
+### XLSX format
+
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment; filename="data.xls"');
+    echo $writer->writeToString(["format" => "xlsx"]);
 
 Installation
 ------------
