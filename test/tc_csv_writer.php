@@ -46,4 +46,18 @@ class TcCsvWriter extends TcBase {
 		$writer->writeToFile($filename,array("with_header" => true, "format" => "xlsx"));
 		$this->assertEquals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",Files::DetermineFileType($filename));
 	}
+
+	function test_addRows(){
+		$writer = new CsvWriter();
+		$writer->addRows(array(
+			array(
+				"h1" => "a",
+				"h2" => "b",
+			),array(
+				"h1" => "c",
+				"h2" => "d",
+			)
+		));
+		$this->assertEquals("a;b\nc;d\n",$writer->writeToString());
+	}
 }
