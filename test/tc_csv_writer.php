@@ -29,5 +29,9 @@ class TcCsvWriter extends TcBase {
 
 		$csv = $writer->exportCsv(array("with_header" => array("Product No.","Price")));
 		$this->assertEquals("\"Product No.\";Price\nCAN_G1X;4999\nCAN_G15;2099.99\n",$csv);
+
+		$filename = __DIR__ . "/temp/output.csv";
+		$writer->exportCsvToFile($filename,array("delimiter" => "|", "with_header" => array("Product No.","Price")));
+		$this->assertEquals("\"Product No.\"|Price\nCAN_G1X|4999\nCAN_G15|2099.99\n",file_get_contents($filename));
 	}
 }
