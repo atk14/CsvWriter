@@ -1,6 +1,8 @@
 CsvWriter
 =========
 
+[![Build Status](https://travis-ci.org/atk14/CsvWriter.svg?branch=master)](https://travis-ci.org/atk14/CsvWriter)
+
 Write CSV into string output or a file. Also provides export to XLSX format.
 
 Basic usage
