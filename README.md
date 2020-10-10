@@ -1,7 +1,7 @@
 CsvWriter
 =========
 
-Write CSV into output or a file. Also provides export to XLSX format.
+Write CSV into string output or a file. Also provides export to XLSX format.
 
 Basic usage
 -----------
@@ -38,9 +38,14 @@ Basic usage
 
 ### XLSX format
 
-    header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment; filename="data.xls"');
+    header("Content-Type: application/vnd.ms-excel");
+    header("Content-Disposition: attachment; filename=data.xlsx");
     echo $writer->writeToString(["format" => "xlsx"]);
+
+### Export to a file
+
+    $write->writeToFile("/path/to/a/file.csv",["with_header" => true]);
+    $write->writeToFile("/path/to/a/file.xlsx",["with_header" => true, "format" => "xlsx"]);
 
 Installation
 ------------
