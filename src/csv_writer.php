@@ -78,13 +78,14 @@ class CsvWriter {
 		}elseif($format == "xlsx"){
 
 			$wExcel = new Ellumilel\ExcelWriter();
-			$wExcel->writeSheet($rows);
+			$wExcel->writeSheet($rows,"Sheet 1");
 			$src = $wExcel->writeToString();
 			fwrite($stream,$src,strlen($src));
 			$bytes_writen = strlen($src);
+
 		}else{
 
-			throw new Exception("CsvWriter: Invalid format: $format");
+			throw new Exception("CsvWriter: Invalid format: \"$format\" (expected \"csv\" or \"xlsx\")");
 		}
 
 		return $bytes_writen;
