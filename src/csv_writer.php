@@ -71,7 +71,11 @@ class CsvWriter {
 
 			$bytes_writen = 0;
 			foreach($rows as $row){
-				$bw = fputcsv($stream,$row,$options["delimiter"],$options["quote"],$options["escape_char"]);
+				if(PHP_MAJOR_VERSION==5 && (PHP_MINOR_VERSION<5 || (PHP_MINOR_VERSION==5 && PHP_RELEASE_VERSION<=4))){
+					$bw = fputcsv($stream,$row,$options["delimiter"],$options["quote"]); // The escape_char parameter was added in PHP 5.5.4
+				}else{
+					$bw = fputcsv($stream,$row,$options["delimiter"],$options["quote"],$options["escape_char"]);
+				}
 				$bytes_writen += $bw;
 			}
 
