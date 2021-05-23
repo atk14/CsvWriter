@@ -60,4 +60,19 @@ class TcCsvWriter extends TcBase {
 		));
 		$this->assertEquals("a;b\nc;d\n",$writer->writeToString());
 	}
+
+	function test_toString(){
+		$writer = new CsvWriter();
+		$this->assertEquals("","$writer");
+
+		$writer->addRow([
+			"k1" => "v1",
+			"k2" => "v2"
+		]);
+		$writer->addRow([
+			"k1" => "v3",
+			"k2" => "v4"
+		]);
+		$this->assertEquals("v1;v2\nv3;v4\n","$writer");
+	}
 }

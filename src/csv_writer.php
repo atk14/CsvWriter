@@ -37,6 +37,9 @@ class CsvWriter {
 		$stream = fopen("php://temp","r+");
 		$bytes_writen = $this->_writeToStream($stream,$options);
 		rewind($stream);
+		if($bytes_writen === 0){
+			return "";
+		}
 		$out = fread($stream,$bytes_writen);
 
 		return $out;
@@ -93,5 +96,13 @@ class CsvWriter {
 		}
 
 		return $bytes_writen;
+	}
+
+	function toString(){
+		return (string)$this->writeToString();
+	}
+
+	function __toString(){
+		return $this->toString();
 	}
 }
