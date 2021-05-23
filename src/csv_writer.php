@@ -67,8 +67,12 @@ class CsvWriter implements ArrayAccess {
 	protected function _writeToStream($stream,$options){
 		$options += $this->default_options;
 		$options += array(
-			"with_header" => false, // true, array("Firstname","Surname")
+			"with_header" => false, // true, false, "auto", array("Firstname","Surname")
 		);
+
+		if($options["with_header"] === "auto"){
+			$options["with_header"] = $this->_isAssoc(array_combine($this->header,$this->header));
+		}
 
 		$format = $options["format"]; // "csv", "xlsx"
 
@@ -106,8 +110,13 @@ class CsvWriter implements ArrayAccess {
 		return $bytes_writen;
 	}
 
+	protected function _isAssoc($ary){
+		if (array() === $ary) return false;
+		return array_keys($ary) !== range(0, count($ary) - 1);
+	}
+
 	function toString(){
-		return (string)$this->writeToString();
+		return (string)$this->writeToString(array("with_header" => "auto"));
 	}
 
 	function __toString(){
