@@ -38,6 +38,12 @@ Basic usage
     //  CAN_G1X;4999
     //  CAN_G15;2099.99
 
+CsvWriter implements ArrayAccess for easier rows adding:
+
+    $writer[] = ["k1" => "v1","k2" => "v2"];
+    $writer[] = ["k1" => "v3","k2" => "v4"];
+
+
 ### XLSX format
 
     header("Content-Type: application/vnd.ms-excel");
