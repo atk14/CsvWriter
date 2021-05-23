@@ -38,6 +38,19 @@ Basic usage
     //  CAN_G1X;4999
     //  CAN_G15;2099.99
 
+The header can be added automatically with the "with_header" option set to "auto": 
+
+    $writer = new CsvWriter();
+    $writer->addRow(["k1" => "v1", "k2" => "v2"]);
+    echo $writer->writeToString(["with_header" => "auto"]);
+    // k1;k2
+    // v2;v2
+
+    $writer = new CsvWriter();
+    $writer->addRow(["v1","v2"]);
+    echo $writer->writeToString(["with_header" => "auto"]);
+    // v2;v2
+
 CsvWriter implements ArrayAccess for easier rows adding:
 
     $writer[] = ["k1" => "v1","k2" => "v2"];
