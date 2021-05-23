@@ -3,6 +3,11 @@ Change Log
 
 All notable changes to the CsvWriter will be documented in this file.
 
+## [1.1] - 2021-05-23
+
+- Added methods CsvWriter::toString() and CsvWriter::__toString()
+- CsvWriter implements ArrayAccess, so it's ok to call ```$csv_writer[] = ["v1","v2"];```
+
 ## [1.0.2] - 2020-11-15
 
 Project is compatible with PHP 8
