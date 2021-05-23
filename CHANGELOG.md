@@ -3,6 +3,11 @@ Change Log
 
 All notable changes to the CsvWriter will be documented in this file.
 
+## [1.1.1] - 2021-05-23
+
+- Header can be added automatically with the option "with_header" set to "auto"
+- The option "with_header" is set to "auto" in methods  CsvWriter::toString() and CsvWriter::__toString()
+
 ## [1.1] - 2021-05-23
 
 - Added methods CsvWriter::toString() and CsvWriter::__toString()
