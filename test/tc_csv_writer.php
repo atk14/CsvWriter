@@ -47,6 +47,17 @@ class TcCsvWriter extends TcBase {
 		$this->assertEquals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",Files::DetermineFileType($filename));
 	}
 
+	function test_automatic_header(){
+		$writer = new CsvWriter();
+		$writer->addRow(array("k1" => "v1","k2" => "v2"));
+		$this->assertEquals("k1;k2\nv1;v2\n",$writer->writeToString(array("with_header" => "auto")));
+
+		$writer = new CsvWriter();
+		$writer->addRow(array("v1","v2"));
+		$this->assertEquals("v1;v2\n",$writer->writeToString(array("with_header" => "auto")));
+
+	}
+
 	function test_addRows(){
 		$writer = new CsvWriter();
 		$writer->addRows(array(
@@ -65,6 +76,7 @@ class TcCsvWriter extends TcBase {
 		$writer = new CsvWriter();
 		$this->assertEquals("","$writer");
 
+		$writer = new CsvWriter();
 		$writer->addRow(array(
 			"k1" => "v1",
 			"k2" => "v2"
@@ -73,6 +85,11 @@ class TcCsvWriter extends TcBase {
 			"k1" => "v3",
 			"k2" => "v4"
 		));
+		$this->assertEquals("k1;k2\nv1;v2\nv3;v4\n","$writer");
+
+		$writer = new CsvWriter();
+		$writer->addRow(array("v1","v2"));
+		$writer->addRow(array("v3","v4"));
 		$this->assertEquals("v1;v2\nv3;v4\n","$writer");
 	}
 
