@@ -46,8 +46,8 @@ Basic usage
 
 ### Export to a file
 
-    $write->writeToFile("/path/to/a/file.csv",["with_header" => true]);
-    $write->writeToFile("/path/to/a/file.xlsx",["with_header" => true, "format" => "xlsx"]);
+    $writer->writeToFile("/path/to/a/file.csv",["with_header" => true]);
+    $writer->writeToFile("/path/to/a/file.xlsx",["with_header" => true, "format" => "xlsx"]);
 
 Installation
 ------------

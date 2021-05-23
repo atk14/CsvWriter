@@ -1,5 +1,5 @@
 <?php
-class CsvWriter {
+class CsvWriter implements ArrayAccess {
 
 	protected $default_options;
 	protected $rows = array();
@@ -18,7 +18,15 @@ class CsvWriter {
 	}
 
 	function addRow($row){
-		$this->rows[] = $row;
+		$this->_addRow($row);
+	}
+
+	protected function _addRow($row,$offset = null){
+		if(is_null($offset)){
+			$this->rows[] = $row;
+		}else{
+			$this->rows[$offset] = $row;
+		}
 		$this->header = $this->header + array_keys($row);
 	}
 
@@ -37,6 +45,9 @@ class CsvWriter {
 		$stream = fopen("php://temp","r+");
 		$bytes_writen = $this->_writeToStream($stream,$options);
 		rewind($stream);
+		if($bytes_writen === 0){
+			return "";
+		}
 		$out = fread($stream,$bytes_writen);
 
 		return $out;
@@ -93,5 +104,31 @@ class CsvWriter {
 		}
 
 		return $bytes_writen;
+	}
+
+	function toString(){
+		return (string)$this->writeToString();
+	}
+
+	function __toString(){
+		return $this->toString();
+	}
+
+	// -- ArrayAccess
+
+	function offsetSet($offset,$value){
+		$this->_addRow($value,$offset);
+	}
+
+	function offsetExists($offset){
+		return isset($this->rows[$offset]);
+	}
+
+	function offsetUnset($offset){
+		unset($this->rows[$offset]);
+	}
+
+	function offsetGet($offset){
+		return isset($this->rows[$offset]) ? $this->rows[$offset] : null;
 	}
 }

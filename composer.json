@@ -13,7 +13,7 @@
         ],
         "require": {
                 "php": ">=5.4.0",
-                "ellumilel/php-excel-writer": "^0.1.8"
+                "ellumilel/php-excel-writer": "^0.1.9"
         },
         "require-dev": {
                 "atk14/tester": "*",
