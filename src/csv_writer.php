@@ -1,5 +1,5 @@
 <?php
-class CsvWriter {
+class CsvWriter implements ArrayAccess {
 
 	protected $default_options;
 	protected $rows = array();
@@ -18,7 +18,15 @@ class CsvWriter {
 	}
 
 	function addRow($row){
-		$this->rows[] = $row;
+		$this->_addRow($row);
+	}
+
+	protected function _addRow($row,$offset = null){
+		if(is_null($offset)){
+			$this->rows[] = $row;
+		}else{
+			$this->rows[$offset] = $row;
+		}
 		$this->header = $this->header + array_keys($row);
 	}
 
@@ -104,5 +112,23 @@ class CsvWriter {
 
 	function __toString(){
 		return $this->toString();
+	}
+
+	// -- ArrayAccess
+
+	function offsetSet($offset,$value){
+		$this->_addRow($value,$offset);
+	}
+
+	function offsetExists($offset){
+		return isset($this->rows[$offset]);
+	}
+
+	function offsetUnset($offset){
+		unset($this->rows[$offset]);
+	}
+
+	function offsetGet($offset){
+		return isset($this->rows[$offset]) ? $this->rows[$offset] : null;
 	}
 }

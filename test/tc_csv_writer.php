@@ -65,14 +65,23 @@ class TcCsvWriter extends TcBase {
 		$writer = new CsvWriter();
 		$this->assertEquals("","$writer");
 
-		$writer->addRow([
+		$writer->addRow(array(
 			"k1" => "v1",
 			"k2" => "v2"
-		]);
-		$writer->addRow([
+		));
+		$writer->addRow(array(
 			"k1" => "v3",
 			"k2" => "v4"
-		]);
+		));
 		$this->assertEquals("v1;v2\nv3;v4\n","$writer");
+	}
+
+	function test_array_access(){
+		$writer = new CsvWriter();
+
+		$writer[] = array("k1" => "v1", "k2" => "v2");
+		$writer[] = array("k1" => "v2", "k2" => "v3");
+
+		$csv = $this->assertEquals("v1;v2\nv2;v3\n",$writer->writeToString());
 	}
 }
