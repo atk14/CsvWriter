@@ -41,10 +41,27 @@ class TcCsvWriter extends TcBase {
 		$this->assertTrue(strlen($xlsx)>0);
 		$filename = Files::WriteToTemp($xlsx);
 		$this->assertEquals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",Files::DetermineFileType($filename,array("original_filename" => "data.xlsx")));
+		unlink($filename);
 
 		$filename = __DIR__ . "/temp/output.xlsx";
 		$writer->writeToFile($filename,array("with_header" => true, "format" => "xlsx"));
 		$this->assertEquals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",Files::DetermineFileType($filename));
+		unlink($filename);
+	}
+
+	function test_empty_csv(){
+		$writer = new CsvWriter();
+
+		$filename = __DIR__ . "/temp/empty.csv";
+		$this->assertFalse(file_exists($filename));
+
+		$writer->writeToFile($filename);
+		$this->assertTrue(file_exists($filename));
+		$this->assertEquals(0,filesize($filename));
+
+		$this->assertEquals("",$writer->writeToString());
+
+		unlink($filename);
 	}
 
 	function test_automatic_header(){
