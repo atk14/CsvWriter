@@ -52,16 +52,32 @@ class TcCsvWriter extends TcBase {
 	function test_empty_csv(){
 		$writer = new CsvWriter();
 
-		$filename = __DIR__ . "/temp/empty.csv";
-		$this->assertFalse(file_exists($filename));
+		$filename = Files::GetTempFilename();
 
 		$writer->writeToFile($filename);
 		$this->assertTrue(file_exists($filename));
 		$this->assertEquals(0,filesize($filename));
+		unlink($filename);
 
 		$this->assertEquals("",$writer->writeToString());
 
+		// --
+
+		$writer->writeToFile($filename,array("with_header" => true));
+		$this->assertTrue(file_exists($filename));
+		$this->assertEquals(0,filesize($filename));
 		unlink($filename);
+
+		$this->assertEquals("",$writer->writeToString(array("with_header" => true)));
+
+		// --
+
+		$writer->writeToFile($filename,array("with_header" => array("k1","k2")));
+		$this->assertTrue(file_exists($filename));
+		$this->assertEquals(6,filesize($filename));
+		unlink($filename);
+
+		$this->assertEquals("k1;k2\n",$writer->writeToString(array("with_header" => array("k1","k2"))));
 	}
 
 	function test_automatic_header(){

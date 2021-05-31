@@ -79,7 +79,9 @@ class CsvWriter implements ArrayAccess {
 		$rows = $this->rows;
 		if($options["with_header"] || $options["with_header"]===array()){
 			$header = is_array($options["with_header"]) ? $options["with_header"] : $this->header;
-			array_unshift($rows,$header);
+			if($header || $rows){ // do not array_unshift() when $header==[] and $rows==[]
+				array_unshift($rows,$header);
+			}
 		}
 
 		if($format == "csv"){
