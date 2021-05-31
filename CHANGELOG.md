@@ -3,6 +3,10 @@ Change Log
 
 All notable changes to the CsvWriter will be documented in this file.
 
+## [1.1.2] - 2021-05-31
+
+- Writing empty CSV fixed
+
 ## [1.1.1] - 2021-05-23
 
 - Header can be added automatically with the option "with_header" set to "auto"
