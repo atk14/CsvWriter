@@ -3,6 +3,11 @@ Change Log
 
 All notable changes to the CsvWriter will be documented in this file.
 
+## [1.2] - 2021-08-02
+
+- The BOM is written at the beginning of the CSV export; it can be suppressed with option write_bom set to false
+- Added option sheet_name for xlsx export (the default is "Sheet 1")
+
 ## [1.1.2] - 2021-05-31
 
 - Writing empty CSV fixed
