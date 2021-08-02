@@ -56,17 +56,32 @@ CsvWriter implements ArrayAccess for easier rows adding:
     $writer[] = ["k1" => "v1","k2" => "v2"];
     $writer[] = ["k1" => "v3","k2" => "v4"];
 
-
 ### XLSX format
 
     header("Content-Type: application/vnd.ms-excel");
     header("Content-Disposition: attachment; filename=data.xlsx");
-    echo $writer->writeToString(["format" => "xlsx", "sheet_name" => "Sheet 1"]);
+    echo $writer->writeToString(["format" => "xlsx"]);
 
 ### Export to a file
 
     $writer->writeToFile("/path/to/a/file.csv",["with_header" => true]);
     $writer->writeToFile("/path/to/a/file.xlsx",["with_header" => true, "format" => "xlsx"]);
+
+### Special options
+
+In case of exporting to CSV, the BOM sequence is automatically written at the beginning of the file. It can be disabled by the options write_bom set to false.
+
+    $write->writeToFile("/path/to/a/file.csv",[
+      "format" => "csv",
+      "write_bom" => false
+    ]);
+
+Sheet name can be set for XLSX export.
+
+    $write->writeToFile("/path/to/a/file.xlsx",[
+      "format" => "xlsx",
+      "sheet_name" => "Order history"
+    ]);
 
 Installation
 ------------
