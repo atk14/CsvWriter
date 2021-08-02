@@ -12,6 +12,7 @@ class CsvWriter implements ArrayAccess {
 			"escape_char" => "\\",
 
 			"format" => "csv", // "csv", "xlsx"
+			"sheet_name" => "Sheet 1", // for xlsx
 		);
 
 		$this->default_options = $options;
@@ -87,6 +88,7 @@ class CsvWriter implements ArrayAccess {
 		if($format == "csv"){
 
 			$bytes_writen = 0;
+
 			foreach($rows as $row){
 				if(PHP_MAJOR_VERSION==5 && (PHP_MINOR_VERSION<5 || (PHP_MINOR_VERSION==5 && PHP_RELEASE_VERSION<=4))){
 					$bw = fputcsv($stream,$row,$options["delimiter"],$options["quote"]); // The escape_char parameter was added in PHP 5.5.4
@@ -99,7 +101,7 @@ class CsvWriter implements ArrayAccess {
 		}elseif($format == "xlsx"){
 
 			$wExcel = new Ellumilel\ExcelWriter();
-			$wExcel->writeSheet($rows,"Sheet 1");
+			$wExcel->writeSheet($rows,$options["sheet_name"]);
 			$src = $wExcel->writeToString();
 			fwrite($stream,$src,strlen($src));
 			$bytes_writen = strlen($src);

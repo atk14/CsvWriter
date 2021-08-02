@@ -61,7 +61,7 @@ CsvWriter implements ArrayAccess for easier rows adding:
 
     header("Content-Type: application/vnd.ms-excel");
     header("Content-Disposition: attachment; filename=data.xlsx");
-    echo $writer->writeToString(["format" => "xlsx"]);
+    echo $writer->writeToString(["format" => "xlsx", "sheet_name" => "Sheet 1"]);
 
 ### Export to a file
 
