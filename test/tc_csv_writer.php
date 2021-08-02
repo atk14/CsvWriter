@@ -135,4 +135,19 @@ class TcCsvWriter extends TcBase {
 
 		$csv = $this->assertEquals("v1;v2\nv2;v3\n",$writer->writeToString());
 	}
+
+	function test_write_bom(){
+		$writer = new CsvWriter(["write_bom" => true]);
+		$writer[] = ["a","b"];
+		$csv = $writer->writeToString();
+		$this->assertEquals("\xEF\xBB\xBFa;b\n",$csv);
+
+		$writer = new CsvWriter();
+		$writer[] = ["c","d"];
+		$csv = $writer->writeToString();
+		$this->assertEquals("\xEF\xBB\xBFc;d\n",$csv);
+		//
+		$csv = $writer->writeToString(["write_bom" => false]);
+		$this->assertEquals("c;d\n",$csv);
+	}
 }
