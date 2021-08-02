@@ -12,7 +12,8 @@ class CsvWriter implements ArrayAccess {
 			"escape_char" => "\\",
 
 			"format" => "csv", // "csv", "xlsx"
-			"sheet_name" => "Sheet 1", // for xlsx
+			"write_bom" => true, // Byte order mark - BOM; for csv exports
+			"sheet_name" => "Sheet 1", // for xlsx exports
 		);
 
 		$this->default_options = $options;
@@ -88,6 +89,11 @@ class CsvWriter implements ArrayAccess {
 		if($format == "csv"){
 
 			$bytes_writen = 0;
+
+			if($options["write_bom"]){
+				fwrite($stream,"\xEF\xBB\xBF");
+				$bytes_writen += 3;
+			}
 
 			foreach($rows as $row){
 				if(PHP_MAJOR_VERSION==5 && (PHP_MINOR_VERSION<5 || (PHP_MINOR_VERSION==5 && PHP_RELEASE_VERSION<=4))){
