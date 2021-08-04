@@ -2,9 +2,9 @@
 os: linux
 
 arch:
-  - arm64
   - ppc64le
-  - s390x
+#  - arm64
+#  - s390x
 
 dist: xenial
 
