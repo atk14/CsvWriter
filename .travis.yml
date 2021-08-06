@@ -1,10 +1,8 @@
 # vim:ts=2:sw=2:et
 os: linux
 
-arch:
-  - ppc64le
-#  - arm64
-#  - s390x
+# Partner Queue Solution, no credits are consumed
+arch: ppc64le
 
 dist: xenial
 
