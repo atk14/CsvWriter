@@ -1,7 +1,7 @@
 {
         "name": "atk14/csv-writer",
         "type": "library",
-        "description": "Write CSV into string output or a file. Also provides export to XLSX format.",
+        "description": "Writes CSV into string output or a file. Also provides export to XLSX format.",
         "keywords": ["csv", "export", "exporter", "writer","xlsx", "xls"],
         "homepage": "https://github.com/atk14/CsvWriter",
         "license": ["MIT"],
