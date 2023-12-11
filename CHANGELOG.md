@@ -3,6 +3,10 @@ Change Log
 
 All notable changes to the CsvWriter will be documented in this file.
 
+## [1.2.1] - 2023-12-11
+
+* 14a8581 - PHP 8.1 issues
+
 ## [1.2] - 2021-08-02
 
 - The BOM is written at the beginning of the CSV export; it can be suppressed with option write_bom set to false
