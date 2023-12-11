@@ -135,18 +135,22 @@ class CsvWriter implements ArrayAccess {
 
 	// -- ArrayAccess
 
+	#[\ReturnTypeWillChange]
 	function offsetSet($offset,$value){
 		$this->_addRow($value,$offset);
 	}
 
+	#[\ReturnTypeWillChange]
 	function offsetExists($offset){
 		return isset($this->rows[$offset]);
 	}
 
+	#[\ReturnTypeWillChange]
 	function offsetUnset($offset){
 		unset($this->rows[$offset]);
 	}
 
+	#[\ReturnTypeWillChange]
 	function offsetGet($offset){
 		return isset($this->rows[$offset]) ? $this->rows[$offset] : null;
 	}
